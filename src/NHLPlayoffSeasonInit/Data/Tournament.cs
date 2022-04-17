@@ -42,6 +42,7 @@ namespace NHLPlayoffSeasonInit.Data
         public class Matchupteam
         {
             public Team team { get; set; }
+            public SeriesRecord seriesRecord { get; set; }
         }
 
         public class Team
@@ -49,6 +50,12 @@ namespace NHLPlayoffSeasonInit.Data
             public int id { get; set; }
             public string name { get; set; }
             public string link { get; set; }
+        }
+
+        public class SeriesRecord
+        {
+            public int wins { get; set; }
+            public int loses { get; set; }
         }
     }
 }

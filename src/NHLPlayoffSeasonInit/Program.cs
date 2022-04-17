@@ -19,9 +19,9 @@ namespace NHLPlayoffSeasonInit
 
             var request = new SeasonRequest
             {
-                SeasonId = "20172018",
-                SeasonName = "2018 NHL Playoffs R2",
-                StartRound = 2
+                SeasonId = "20212022",
+                SeasonName = "2022 NHL Playoffs",
+                StartRound = 1
             };
             Updater.PlayOffUpdate(request);
         }

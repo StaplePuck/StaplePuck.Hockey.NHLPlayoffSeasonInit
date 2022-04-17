@@ -63,16 +63,22 @@ namespace NHLPlayoffSeasonInit
             var content = await dateResult.Content.ReadAsStringAsync();
             var value = JsonConvert.DeserializeObject<Data.Tournament.Result>(content);
 
-            var round = value.rounds.SingleOrDefault(x => x.number == startRound);
+            var round = value.rounds.SingleOrDefault(x => x.number == startRound - 1);
             if (round == null)
             {
                 return null;
             }
             foreach (var series in round.series)
             {
-                foreach (var item in series.matchupTeams)
+                if (series.matchupTeams != null)
                 {
-                    filterList.Add(item.team.id);
+                    foreach (var item in series.matchupTeams)
+                    {
+                        if (item.seriesRecord.wins == round.format.numberOfWins)
+                        {
+                            filterList.Add(item.team.id);
+                        }
+                    }
                 }
             }
 

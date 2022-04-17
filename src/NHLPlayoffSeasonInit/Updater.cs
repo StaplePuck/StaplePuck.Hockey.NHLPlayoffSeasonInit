@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using Microsoft.Extensions.DependencyInjection;
+using StaplePuck.Core.Auth;
 using StaplePuck.Core.Stats;
 using GraphQL.Client;
 using StaplePuck.Core.Client;
@@ -25,12 +26,18 @@ namespace NHLPlayoffSeasonInit
                 .AddOptions()
                 .Configure<Settings>(configuration.GetSection("Settings"))
                 .AddSingleton<StatsProvider>()
+                .AddAuth0Client(configuration)
                 .AddStaplePuckClient(configuration)
                 .BuildServiceProvider();
 
             var stats = serviceProvider.GetService<StatsProvider>();
             IEnumerable<int> teamIds;
-            if (request.StartRound > 1)
+            if (request.StartRound == 0)
+            {
+                teamIds = new int[]{ 6, 14, 15, 4, 5, 8, 12, 3, 2, 13, 10, 29, 19, 21, 54, 25, 22, 16, 18, 53, 23, 30, 20, 52};
+                teamIds = new int[] { 8, 12, 2, 16, 53, 23, 20, 25, 19, 6, 15, 54, 21, 4, 14, 29  };
+            }
+            else if (request.StartRound > 1)
             {
                 teamIds = stats.GetTeamsAtRoundAsync(request.SeasonId, request.StartRound).Result;
             }
@@ -56,6 +63,7 @@ namespace NHLPlayoffSeasonInit
             }
 
             var client = serviceProvider.GetService<IStaplePuckClient>();
+            //var types = client.GetAsync<StaplePuck.Core.Fantasy.User>("user").Result;
             var result = client.UpdateAsync<Season>("createSeason", season).Result;
         }
     }
