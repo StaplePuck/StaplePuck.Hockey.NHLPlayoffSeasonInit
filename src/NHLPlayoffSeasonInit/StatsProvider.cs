@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
-using StaplePuck.Core.Stats;
+using NHLPlayoffSeasonInit.Request;
 
 namespace NHLPlayoffSeasonInit
 {
@@ -44,6 +44,18 @@ namespace NHLPlayoffSeasonInit
                     filterList.Add(team.team.id);
                 }
             }
+
+            return filterList;
+        }
+
+        public async Task<IEnumerable<int>> GetTeamsAtRegularSeasonAsync(string seasonId)
+        {
+            var filterList = new List<int>();
+
+            var standingsUrl = string.Format(_settings.StandingsUrl, seasonId);
+            var standingsResult = await _client.GetAsync(standingsUrl);
+            var standings = await this.SerializeResult<Data.Standings.Result>(standingsResult);
+            filterList = standings.records.SelectMany(x => x.teamRecords).Select(x => x.team.id).ToList();
 
             return filterList;
         }

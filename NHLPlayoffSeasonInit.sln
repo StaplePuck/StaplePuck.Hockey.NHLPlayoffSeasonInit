@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHLPlayoffSeasonInit", "src\NHLPlayoffSeasonInit\NHLPlayoffSeasonInit.csproj", "{1D47E318-563F-4D6C-A839-D62C41E49C25}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NHLPlayoffSeasonInit.Tests", "test\NHLPlayoffSeasonInit.Tests\NHLPlayoffSeasonInit.Tests.csproj", "{33BE85D9-D190-4806-AB6F-2C546D45818A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaplePuck.Core", "..\StaplePuck.API\src\StaplePuck.Core\StaplePuck.Core.csproj", "{A68CCC69-DD7A-4F77-9067-EA990625F418}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{33BE85D9-D190-4806-AB6F-2C546D45818A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33BE85D9-D190-4806-AB6F-2C546D45818A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33BE85D9-D190-4806-AB6F-2C546D45818A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A68CCC69-DD7A-4F77-9067-EA990625F418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A68CCC69-DD7A-4F77-9067-EA990625F418}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A68CCC69-DD7A-4F77-9067-EA990625F418}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A68CCC69-DD7A-4F77-9067-EA990625F418}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
