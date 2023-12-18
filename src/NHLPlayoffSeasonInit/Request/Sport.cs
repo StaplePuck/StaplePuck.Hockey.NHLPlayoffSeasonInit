@@ -8,6 +8,6 @@ namespace NHLPlayoffSeasonInit.Request
 {
     public class Sport
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = "Hockey";
     }
 }

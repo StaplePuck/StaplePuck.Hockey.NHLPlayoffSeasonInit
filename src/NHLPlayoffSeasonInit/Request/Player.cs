@@ -12,6 +12,7 @@ namespace NHLPlayoffSeasonInit.Request
     {
         public string FullName { get; set; } = string.Empty;
         public string ExternalId { get; set; } = string.Empty;
+        public string? ExternalId2 { get; set; }
         public string ShortName { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

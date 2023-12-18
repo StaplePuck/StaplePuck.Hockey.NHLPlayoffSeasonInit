@@ -13,5 +13,6 @@ namespace NHLPlayoffSeasonInit.Request
         public string ShortName { get; set; } = string.Empty;
         public string LocationName { get; set; } = string.Empty;
         public int ExternalId { get; set; }
+        public string? ExternalId2 { get; set; }
     }
 }
