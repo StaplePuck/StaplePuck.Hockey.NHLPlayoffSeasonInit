@@ -6,9 +6,13 @@ namespace NHLPlayoffSeasonInit
 {
     public class Settings
     {
-        public string StandingsUrl { get; set; }
-        public string PlayoffStandingsUrl { get; set; }
-        public string RosterUrl { get; set; }
-        public string TeamUrl { get; set; }
+        public string StandingsUrl { get; set; } = string.Empty;
+        public string PlayoffStandingsUrl { get; set; } = string.Empty;
+        public string RosterUrl { get; set; } = string.Empty;
+        public string FranchiseUrl { get; set; } = string.Empty;
+        public string ESTeamUrl { get; set; } = string.Empty;
+        public string ESRosterUrl { get; set; } = string.Empty;
+
+        public string S3Bucket { get; set; } = string.Empty;
     }
 }

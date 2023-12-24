@@ -12,18 +12,26 @@ namespace NHLPlayoffSeasonInit
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            
-
             var request = new SeasonRequest
             {
-                SeasonId = "20222023",
-                SeasonName = "2023 NHL Playoffs",
-                StartRound = 1
+                SeasonId = "20232024",
+                GameDate = "2023-10-10",
+                SeasonName = "2023 - 2024 NHL Regular Season",
+                StartRound = 0
             };
-            Updater.PlayOffUpdate(request);
+            var tokenSource = new CancellationTokenSource();
+            await Updater.UpdateAsync(request, tokenSource.Token);
+
+            var assetRequest = new AssetRequest
+            {
+                SeasonId = 14,
+                GameDate = "2023-10-10",
+                OverwriteHeadshots = false,
+                OverwriteLogos = false
+            };
+            await Updater.UpdateAssetsAsync(assetRequest, tokenSource.Token);
         }
     }
 }

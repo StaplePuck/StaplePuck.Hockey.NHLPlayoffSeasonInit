@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NHLPlayoffSeasonInit.Request
+namespace NHLPlayoffSeasonInit.StaplePuck
 {
     public class PlayerSeason
     {

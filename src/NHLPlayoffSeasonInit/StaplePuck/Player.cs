@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NHLPlayoffSeasonInit.Request
+namespace NHLPlayoffSeasonInit.StaplePuck
 {
     public class Player
     {
         public string FullName { get; set; } = string.Empty;
         public string ExternalId { get; set; } = string.Empty;
+        public string? ExternalId2 { get; set; }
         public string ShortName { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NHLPlayoffSeasonInit.Request
+namespace NHLPlayoffSeasonInit.StaplePuck
 {
     public class Sport
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = "Hockey";
     }
 }
