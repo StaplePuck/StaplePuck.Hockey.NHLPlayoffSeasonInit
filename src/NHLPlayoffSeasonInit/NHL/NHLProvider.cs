@@ -35,7 +35,6 @@ namespace NHLPlayoffSeasonInit.NHL
         {
             if (null == _franchises)
             {
-                //https://api.nhle.com/stats/rest/en/franchise
                 var result = await _client.GetAsync(_settings.FranchiseUrl, cancellationToken);
                 var franchises = await DeserializeResult<Franchises>(result, cancellationToken);
                 if (null == franchises)
@@ -54,7 +53,6 @@ namespace NHLPlayoffSeasonInit.NHL
         {
             if (null == _standings)
             {
-                //https://api-web.nhle.com/v1/standings/2023-04-14
                 var result = await _client.GetAsync(string.Format(_settings.StandingsUrl, gameDate), cancellationToken);
                 var standings = await DeserializeResult<Standings>(result, cancellationToken);
                 if (null == standings)

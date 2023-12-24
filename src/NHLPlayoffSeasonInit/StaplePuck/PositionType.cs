@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NHLPlayoffSeasonInit.Request
+namespace NHLPlayoffSeasonInit.StaplePuck
 {
-    public class Sport
+    public class PositionType
     {
-        public string Name { get; set; } = "Hockey";
+        public string Name { get; set; } = string.Empty;
     }
 }

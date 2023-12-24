@@ -1,10 +1,10 @@
-﻿using NHLPlayoffSeasonInit.Request;
+﻿using NHLPlayoffSeasonInit.StaplePuck;
 
-namespace NHLPlayoffSeasonInit
+namespace NHLPlayoffSeasonInit.Roster
 {
     public interface IRosterProvider
     {
-        Task<Stream?> GetPlayerHeadShotAsync(PlayerSeason player, CancellationToken cancellationToken);
+        Task<Stream?> GetPlayerHeadShotAsync(string espTeamId, int playerNumnber, CancellationToken cancellationToken);
         Task<IEnumerable<PlayerSeason>> GetPlayersAsync(int teamId, string seasonId, string gameDate, CancellationToken cancellationToken);
         Task<IEnumerable<int>> GetPlayoffTeamsAsync(string seasonId, string gameDate, int round, CancellationToken cancellationToken);
         Task<IEnumerable<int>> GetRegularSeasonTeamsAsync(string seasonId, string gameDate, CancellationToken cancellationToken);

@@ -12,5 +12,7 @@ namespace NHLPlayoffSeasonInit
         public string FranchiseUrl { get; set; } = string.Empty;
         public string ESTeamUrl { get; set; } = string.Empty;
         public string ESRosterUrl { get; set; } = string.Empty;
+
+        public string S3Bucket { get; set; } = string.Empty;
     }
 }

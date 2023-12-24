@@ -9,6 +9,6 @@ namespace NHLPlayoffSeasonInit
         public string SeasonId { get; set; } = string.Empty;
         public string GameDate { get; set; } = string.Empty;
         public int StartRound { get; set; }
-        public string SeasonName { get; set; } = string.Empty;
+        public string SeasonName { get; set; } = string.Empty;        
     }
 }

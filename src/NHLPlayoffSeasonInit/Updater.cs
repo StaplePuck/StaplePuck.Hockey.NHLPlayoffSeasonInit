@@ -11,30 +11,43 @@ using Microsoft.Extensions.Logging;
 using StaplePuck.Core.Auth;
 using GraphQL.Client;
 using StaplePuck.Core.Client;
-using NHLPlayoffSeasonInit.Request;
 using NHLPlayoffSeasonInit.ESP;
 using NHLPlayoffSeasonInit.NHL;
+using NHLPlayoffSeasonInit.Roster;
+using NHLPlayoffSeasonInit.Storage;
+using NHLPlayoffSeasonInit.StaplePuck;
 
 namespace NHLPlayoffSeasonInit
 {
     public class Updater
     {
-        public static async Task UpdateAsync(SeasonRequest request, CancellationToken cancellationToken)
+        private static ServiceProvider GenerateServices()
         {
             var builder = new ConfigurationBuilder()
                 .AddEnvironmentVariables();
             var configuration = builder.Build();
 
-            var serviceProvider = new ServiceCollection()
+            return new ServiceCollection()
                 .AddOptions()
                 .Configure<Settings>(configuration.GetSection("Settings"))
                 .AddSingleton<IRosterProvider, RosterProvider>()
                 .AddSingleton<INHLProvider, NHLProvider>()
                 .AddSingleton<IESProvider, ESProvider>()
+
+                .AddSingleton<IStaplePuckProvider, StaplePuckProvider>()
+
+                .AddSingleton<IStorageClient, S3Client>()
+                .AddSingleton<IStorageProvider, StorageProvider>()
+
                 .AddAuth0Client(configuration)
                 .AddStaplePuckClient(configuration)
                 .AddLogging()
                 .BuildServiceProvider();
+        }
+
+        public static async Task UpdateAsync(SeasonRequest request, CancellationToken cancellationToken)
+        {
+            var serviceProvider = GenerateServices();
 
             var provider = serviceProvider.GetRequiredService<IRosterProvider>();
             IEnumerable<int> teamIds;
@@ -65,9 +78,37 @@ namespace NHLPlayoffSeasonInit
                 season.PlayerSeasons.AddRange(players);
             }
 
-            var client = serviceProvider.GetRequiredService<IStaplePuckClient>();
-            //var types = client.GetAsync<StaplePuck.Core.Fantasy.User>("user").Result;
-            var result = client.UpdateAsync<Season>("createSeason", season).Result;
-         }
+            var staplePuck = serviceProvider.GetRequiredService<IStaplePuckProvider>();
+            await staplePuck.CreateSeaseonAsync(season, cancellationToken);
+        }
+
+
+        public static async Task UpdateAssetsAsync(AssetRequest request, CancellationToken cancellationToken)
+        {
+            var serviceProvider = GenerateServices();
+
+            var provider = serviceProvider.GetRequiredService<IStaplePuckProvider>();
+            var storageProvider = serviceProvider.GetRequiredService<IStorageProvider>();
+            var season = await provider.GetSesaonPlayersAsync(request.SeasonId, cancellationToken);
+
+            if (season == null)
+            {
+                Console.Error.WriteLine("No season info");
+                return;
+            }
+            foreach (var teamSeason in season.TeamSeasons)
+            {
+                if (teamSeason?.Team != null)
+                {
+                    var team = teamSeason.Team;
+                    await storageProvider.UploadLogoAsync(team.Id, team.ExternalId, request.GameDate, request.OverwriteLogos, cancellationToken);
+                }
+            }
+
+            foreach (var playerSeason in season.PlayerSeasons)
+            {
+                await storageProvider.UploadHeadshotAsync(playerSeason, request.OverwriteHeadshots, cancellationToken);
+            }
+        }
     }
 }

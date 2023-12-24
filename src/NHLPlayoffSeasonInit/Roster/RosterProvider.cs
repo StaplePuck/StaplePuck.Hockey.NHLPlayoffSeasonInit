@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using NHLPlayoffSeasonInit.ESP;
 using NHLPlayoffSeasonInit.NHL;
-using NHLPlayoffSeasonInit.Request;
+using NHLPlayoffSeasonInit.StaplePuck;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NHLPlayoffSeasonInit
+namespace NHLPlayoffSeasonInit.Roster
 {
     public class RosterProvider : IRosterProvider
     {
@@ -109,7 +109,7 @@ namespace NHLPlayoffSeasonInit
             return playerList;
         }
 
-        private async Task<PlayerSeason> GeneratePlayerAsync(Team team, Roster.Player player, PositionType position, CancellationToken cancellationToken)
+        private async Task<PlayerSeason> GeneratePlayerAsync(Team team, NHL.Roster.Player player, PositionType position, CancellationToken cancellationToken)
         {
             string? externalId2 = null;
             if (team.ExternalId2 != null)
@@ -140,14 +140,9 @@ namespace NHLPlayoffSeasonInit
             return _nhlProvider.GetTeamLogo(teamId, gameDate, cancellationToken);
         }
 
-        public Task<Stream?> GetPlayerHeadShotAsync(PlayerSeason player, CancellationToken cancellationToken)
+        public Task<Stream?> GetPlayerHeadShotAsync(string espTeamId, int playerNumnber, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(player.Team?.ExternalId2) || string.IsNullOrEmpty(player.Player?.ExternalId2))
-            {
-                _logger.LogWarning($"Skipping getting player profile due to ext id not found {player.Player?.FullName}");
-                return Task.FromResult<Stream?>(null);
-            }
-            return _esProvider.GetPlayerHeadShotAsync(player.Team.ExternalId2, player.Player.Number, cancellationToken);
+            return _esProvider.GetPlayerHeadShotAsync(espTeamId, playerNumnber, cancellationToken);
         }
 
         private static PositionType DefensemanType()

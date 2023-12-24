@@ -17,12 +17,21 @@ namespace NHLPlayoffSeasonInit
             var request = new SeasonRequest
             {
                 SeasonId = "20232024",
-                GameDate = "2023-12-17",
+                GameDate = "2023-10-10",
                 SeasonName = "2023 - 2024 NHL Regular Season",
                 StartRound = 0
             };
             var tokenSource = new CancellationTokenSource();
             await Updater.UpdateAsync(request, tokenSource.Token);
+
+            var assetRequest = new AssetRequest
+            {
+                SeasonId = 14,
+                GameDate = "2023-10-10",
+                OverwriteHeadshots = false,
+                OverwriteLogos = false
+            };
+            await Updater.UpdateAssetsAsync(assetRequest, tokenSource.Token);
         }
     }
 }
